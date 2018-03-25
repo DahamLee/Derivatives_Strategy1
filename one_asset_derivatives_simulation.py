@@ -161,7 +161,7 @@ def monte_carlo_simulation(S0, risk_free, sigma1, X, T_list, length, time):
 #####       시뮬레이션       #####
 ###############################
 '''
-simulation_number = 10
+simulation_number = 50
 simulation_results = np.zeros((simulation_number, 2))
 stocks_1_temp = np.zeros((simulation_number, length))
 
@@ -229,7 +229,9 @@ print('옵션을 행사할 확률: ', non_zero_count / simulation_number * 100, 
 print('델타헷지의 이자포함누적손익 평균: ', avg_of_total_cashflow)
 values = simulation_results
 df = pd.DataFrame(values, columns=['옵션 payoff', '누적 손익'])
-df.to_excel("one_asset_result_of_monte_carlo_simulation" + '.xls', encoding='utf-8')
+writer = pd.ExcelWriter('one_asset_result_of_monte_carlo_simulation.xlsx')
+df.to_excel(writer, encoding='utf-8')
+writer.save()
 plt.hist(simulation_results[:, 1], bins=100)
 #
 # max_ind = np.argmax(simulation_results[:, 1])
